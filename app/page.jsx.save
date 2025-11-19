@@ -1,0 +1,259 @@
+// app/page.jsx
+"use client";
+
+import { useEffect, useState } from "react";
+import LiveTechPanel from "../components/LiveTechPanel";
+import LiveGamesGrid from "../components/LiveGamesGrid";
+import MomentumSparkline from "../components/MomentumSparkline";
+
+export default function HomePage() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [momentumTab, setMomentumTab] = useState("historico"); // "hoy" | "historico"
+
+  useEffect(() => {
+    async function loadAnalysis() {
+      try {
+        const res = await fetch("/api/analyze");
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const json = await res.json();
+        setData(json);
+      } catch (err) {
+        console.error("Error al cargar /api/analyze:", err);
+        setErrorMsg(err.message || "Error desconocido");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadAnalysis();
+  }, []);
+
+  // Mientras está cargando
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-slate-950 text-gray-100 p-6 space-y-4">
+        <h1 className="text-2xl font-bold">🏀 Dashboard NBA Predictivo</h1>
+        <p className="text-sm text-gray-400">
+          Modelo de líneas de mercado, momentum y value (pre-game) + módulo
+          técnico en vivo con pendiente, puntos de inflexión y ritmo por
+          equipo.
+        </p>
+        <p className="mt-4 text-gray-300">Cargando análisis…</p>
+      </main>
+    );
+  }
+
+  // Una vez terminó de cargar (con o sin error)
+  return (
+    <main className="min-h-screen bg-slate-950 text-gray-100 p-6 space-y-6">
+      <header className="space-y-2">
+        <h1 className="text-2xl font-bold">🏀 Dashboard NBA Predictivo</h1>
+        <p className="text-sm text-gray-400">
+          Modelo de líneas de mercado, momentum y value (pre-game) + módulo
+          técnico en vivo con pendiente, puntos de inflexión y ritmo por
+          equipo.
+        </p>
+      </header>
+
+      {/* Si hubo error al cargar /api/analyze */}
+      {errorMsg && (
+        <section className="p-4 bg-red-900/40 border border-red-700 rounded-lg">
+          <h2 className="text-lg font-semibold mb-2">
+            ❌ Error al cargar análisis pre-game
+          </h2>
+          <p className="text-sm text-red-200">
+            /api/analyze respondió con error: {errorMsg}
+          </p>
+        </section>
+      )}
+
+      {/* Si los datos llegaron bien */}
+      {data && data.ok && !errorMsg && (
+        <>
+          {/* Resumen JSON (rápido) */}
+          <section className="bg-slate-900 border border-slate-700 rounded-lg p-4 space-y-2">
+            <h2 className="text-lg font-semibold mb-2">
+              📊 Resumen del backtest / análisis
+            </h2>
+            <p className="text-sm text-gray-300">
+              Partidos analizados:{" "}
+              <span className="font-mono">{data.summary.games}</span> · k usado:{" "}
+              <span className="font-mono">{data.summary.k_used}</span> · MAE:{" "}
+              <span className="font-mono">
+                {data.summary.MAE?.toFixed
+                  ? data.summary.MAE.toFixed(2)
+                  : Number(data.summary.MAE || 0).toFixed(2)}
+              </span>{" "}
+              · MSE:{" "}
+              <span className="font-mono">
+                {data.summary.MSE?.toFixed
+                  ? data.summary.MSE.toFixed(3)
+                  : Number(data.summary.MSE || 0).toFixed(3)}
+              </span>
+            </p>
+            <details className="mt-2">
+              <summary className="cursor-pointer text-xs text-gray-400">
+                Ver JSON completo
+              </summary>
+              <pre className="mt-2 bg-slate-950/60 p-3 rounded text-xs overflow-x-auto">
+                {JSON.stringify(data, null, 2)}
+              </pre>
+            </details>
+          </section>
+
+          {/* Momentum del mercado (HOY / HISTÓRICO) */}
+          <section className="bg-slate-900 border border-slate-700 rounded-lg p-4 space-y-3">
+            {/* Encabezado con pestañas y botón */}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+              <div className="space-y-1">
+                <h2 className="text-lg font-semibold">
+                  🔍 Momentum del mercado
+                </h2>
+                <p className="text-xs text-gray-400">
+                  Vista rápida de cómo se han movido las líneas de totales y
+                  cómo se comportó el modelo, tanto hoy como en los partidos
+                  guardados en histórico.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 self-start md:self-auto">
+                <div className="inline-flex rounded-full border border-slate-700 bg-slate-950/40 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setMomentumTab("hoy")}
+                    className={`px-3 py-1 rounded-full ${
+                      momentumTab === "hoy"
+                        ? "bg-slate-800 text-amber-200"
+                        : "text-gray-400 hover:text-gray-200"
+                    }`}
+                  >
+                    Hoy
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMomentumTab("historico")}
+                    className={`px-3 py-1 rounded-full ${
+                      momentumTab === "historico"
+                        ? "bg-slate-800 text-amber-200"
+                        : "text-gray-400 hover:text-gray-200"
+                    }`}
+                  >
+                    Histórico
+                  </button>
+                </div>
+
+                {/* Botón visual por ahora, conectaremos lógica después */}
+                <button
+                  type="button"
+                  className="text-[11px] md:text-xs rounded-full border border-amber-400 px-3 py-1 text-amber-200 hover:bg-amber-400/10 whitespace-nowrap"
+                >
+                  Mandar a histórico (pronto)
+                </button>
+              </div>
+            </div>
+
+            {/* Contenido según pestaña */}
+            {momentumTab === "historico" && (
+              <>
+                <p className="text-xs text-gray-400">
+                  Comparación entre línea de apertura, línea de cierre, total
+                  real y predicción del modelo para los últimos partidos
+                  analizados (backtest).
+                </p>
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {data.analyzed.map((g) => (
+                    <div
+                      key={g.gameId}
+                      className="border border-slate-700 rounded-md p-3 bg-slate-950/40"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs text-gray-400">{g.date}</p>
+                          <p className="text-sm font-semibold">{g.matchup}</p>
+                        </div>
+                        <div className="text-right text-xs">
+                          <span
+                            className={
+                              g.momentum === "bullish"
+                                ? "text-green-400"
+                                : g.momentum === "bearish"
+                                ? "text-red-400"
+                                : "text-yellow-300"
+                            }
+                          >
+                            {g.momentum === "bullish" && "🟢 Alcista"}
+                            {g.momentum === "bearish" && "🔴 Bajista"}
+                            {g.momentum === "neutral" && "🟡 Neutro"}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-1 text-[11px] text-gray-300 mt-2">
+                        <div>
+                          <p>
+                            Línea apertura:{" "}
+                            <span className="font-mono">{g.lineOpen}</span>
+                          </p>
+                          <p>
+                            Línea cierre:{" "}
+                            <span className="font-mono">{g.lineClose}</span>
+                          </p>
+                          <p>
+                            Mov. mercado:{" "}
+                            <span className="font-mono">{g.marketMove}</span>
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            Total real:{" "}
+                            <span className="font-mono">{g.finalTotal}</span>
+                          </p>
+                          <p>
+                            Pred. modelo:{" "}
+                            <span className="font-mono">{g.predicted}</span>
+                          </p>
+                          <p>
+                            Error modelo:{" "}
+                            <span className="font-mono">{g.error}</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Gráfica Y / -Y como separador visual */}
+                      <MomentumSparkline values={g.momentumCurve} />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {momentumTab === "hoy" && (
+              <div className="border border-dashed border-slate-700 rounded-md p-3 text-xs text-gray-300 bg-slate-950/40">
+                <p>
+                  Aquí se mostrará el momentum EN VIVO de los partidos de hoy:
+                  movimiento de líneas de apertura a live, diferencia modelo vs
+                  mercado y señales clave del bot.
+                </p>
+                <p className="mt-1 text-[11px] text-gray-400">
+                  En la siguiente etapa conectaremos esta vista con los datos
+                  live y el botón de “Mandar a histórico” para que cada juego
+                  que cierres se guarde y alimente la pestaña de histórico. 💛
+                </p>
+              </div>
+            )}
+          </section>
+        </>
+      )}
+
+      {/* Panel técnico live (un partido) */}
+      <LiveTechPanel />
+
+      {/* Grid live por juego con mini-grafica y value OU/spread/ML */}
+      <LiveGamesGrid />
+    </main>
+  );
+}

@@ -1,0 +1,13 @@
+/* styles/test.css */
+h1 { color: #ffcc00; }
+p { color: #cbd5e1; }
+
+.chart {
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  padding: 12px;
+}
+
+
+
+

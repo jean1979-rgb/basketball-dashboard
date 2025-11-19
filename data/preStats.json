@@ -1,0 +1,89 @@
+{
+  "games": [
+    {
+      "homeTeam": "DAL",
+      "awayTeam": "PHX",
+
+      "pts": {
+        "away": {
+          "team": "PHX",
+          "all": { "for": 116.8, "against": 113.5 },
+
+          "home": { "for": null, "against": null },
+          "away": { "for": 116.8, "against": 113.5 },
+
+          "fav": { "for": null, "against": null },
+          "dog": { "for": 116.0, "against": 114.0 },
+
+          "l5": { "for": 118.0, "against": 111.0 },
+          "l5Home": { "for": null, "against": null },
+          "l5Away": { "for": 118.0, "against": 111.0 },
+
+          "conf": { "for": 117.0, "against": 112.0 },
+          "confHome": { "for": null, "against": null },
+          "confAway": { "for": 117.0, "against": 112.0 }
+        },
+
+        "home": {
+          "team": "DAL",
+          "all": { "for": 114.2, "against": 111.7 },
+
+          "home": { "for": 114.2, "against": 111.7 },
+          "away": { "for": null, "against": null },
+
+          "fav": { "for": 115.0, "against": 111.0 },
+          "dog": { "for": null, "against": null },
+
+          "l5": { "for": 116.0, "against": 110.0 },
+          "l5Home": { "for": 116.0, "against": 110.0 },
+          "l5Away": { "for": null, "against": null },
+
+          "conf": { "for": 115.2, "against": 111.0 },
+          "confHome": { "for": 115.2, "against": 111.0 },
+          "confAway": { "for": null, "against": null }
+        }
+      },
+
+      "reb": {
+        "away": {
+          "team": "PHX",
+          "all": { "for": 45.2, "against": 43.1 },
+
+          "home": { "for": null, "against": null },
+          "away": { "for": 45.2, "against": 43.1 },
+
+          "fav": { "for": null, "against": null },
+          "dog": { "for": 45.0, "against": 43.5 },
+
+          "l5": { "for": 46.0, "against": 42.5 },
+          "l5Home": { "for": null, "against": null },
+          "l5Away": { "for": 46.0, "against": 42.5 },
+
+          "conf": { "for": 45.5, "against": 42.8 },
+          "confHome": { "for": null, "against": null },
+          "confAway": { "for": 45.5, "against": 42.8 }
+        },
+
+        "home": {
+          "team": "DAL",
+          "all": { "for": 44.0, "against": 42.0 },
+
+          "home": { "for": 44.0, "against": 42.0 },
+          "away": { "for": null, "against": null },
+
+          "fav": { "for": 44.5, "against": 41.8 },
+          "dog": { "for": null, "against": null },
+
+          "l5": { "for": 44.5, "against": 41.5 },
+          "l5Home": { "for": 44.5, "against": 41.5 },
+          "l5Away": { "for": null, "against": null },
+
+          "conf": { "for": 44.3, "against": 41.8 },
+          "confHome": { "for": 44.3, "against": 41.8 },
+          "confAway": { "for": null, "against": null }
+        }
+      }
+    }
+  ]
+}
+

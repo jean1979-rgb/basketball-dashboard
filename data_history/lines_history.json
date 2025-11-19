@@ -1,0 +1,83 @@
+[
+  {
+    "gameId": 1,
+    "date": "2024-10-21",
+    "matchup": "Lakers @ Nuggets",
+    "lineOpen": 224.5,
+    "lineClose": 226.0,
+    "finalTotal": 228
+  },
+  {
+    "gameId": 2,
+    "date": "2024-10-21",
+    "matchup": "Suns @ Warriors",
+    "lineOpen": 231.5,
+    "lineClose": 232.0,
+    "finalTotal": 235
+  },
+  {
+    "gameId": 3,
+    "date": "2024-10-22",
+    "matchup": "Celtics @ Heat",
+    "lineOpen": 219.0,
+    "lineClose": 217.5,
+    "finalTotal": 214
+  },
+  {
+    "gameId": 4,
+    "date": "2024-10-22",
+    "matchup": "Bucks @ Bulls",
+    "lineOpen": 227.5,
+    "lineClose": 229.0,
+    "finalTotal": 226
+  },
+  {
+    "gameId": 5,
+    "date": "2024-10-23",
+    "matchup": "Knicks @ 76ers",
+    "lineOpen": 221.5,
+    "lineClose": 220.0,
+    "finalTotal": 218
+  },
+  {
+    "gameId": 6,
+    "date": "2024-10-23",
+    "matchup": "Mavs @ Clippers",
+    "lineOpen": 228.0,
+    "lineClose": 230.5,
+    "finalTotal": 233
+  },
+  {
+    "gameId": 7,
+    "date": "2024-10-24",
+    "matchup": "Grizzlies @ Pelicans",
+    "lineOpen": 226.5,
+    "lineClose": 225.0,
+    "finalTotal": 222
+  },
+  {
+    "gameId": 8,
+    "date": "2024-10-24",
+    "matchup": "Hawks @ Raptors",
+    "lineOpen": 230.0,
+    "lineClose": 231.5,
+    "finalTotal": 229
+  },
+  {
+    "gameId": 9,
+    "date": "2024-10-25",
+    "matchup": "Cavs @ Pacers",
+    "lineOpen": 223.5,
+    "lineClose": 224.0,
+    "finalTotal": 221
+  },
+  {
+    "gameId": 10,
+    "date": "2024-10-25",
+    "matchup": "Rockets @ Spurs",
+    "lineOpen": 222.0,
+    "lineClose": 221.0,
+    "finalTotal": 219
+  }
+]
+
